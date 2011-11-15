@@ -1,0 +1,2 @@
+ELGG Update Services will check the ELGG´s plugin repository and notify the administrators about new plugin releases.
+To do: elgg_update_services_file_get_conditional_contents should be a core function or must be placed inside a "framework" plugin. The function, with a different name, is reused in Spam Login Filter plugin.
