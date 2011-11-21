@@ -64,7 +64,7 @@ function elgg_update_services_page_handler($page) {
 		if (count($update_result["result"]) > 0) {
 			foreach($update_result["result"] as $result) {
 				//Compose the email				
-				$content .= "<br>" . $result["plugin_id"] . " - " . $result["plugin_name"] . " - " . $result["plugin_url"];
+				$content .= "<br>" . $result["plugin_name"] . " - " . $result["plugin_version"] . " - " . $result["download_url"] . " - " . $result["plugin_url"] . "<br>";
 			}
 		}
 
@@ -80,7 +80,7 @@ function elgg_update_services_page_handler($page) {
 
 function elgg_update_services_cron($hook, $entity_type, $returnvalue, $params){
 	//Retrieve the next execution date
-	//set_plugin_setting('execution_date', time(), 'elgg_update_services'); // Uncomment this line to test the plugin
+	set_plugin_setting('execution_date', time(), 'elgg_update_services'); // Uncomment this line to test the plugin
 	
 	$execution_date = get_plugin_setting('execution_date', 'elgg_update_services');
 	
@@ -132,6 +132,7 @@ function elgg_update_services_check_update() {
 		foreach($update_result["result"] as $result) {
 			//Compose the e-mail				
 			$message .= elgg_echo('elgg_update_services:plugin_name') . $result["plugin_name"] . "\r\n";
+			$message .= elgg_echo('elgg_update_services:plugin_version') . $result["plugin_version"] . "\r\n";
 			$message .= elgg_echo('elgg_update_services:plugin_url') . $result["plugin_url"] . "\r\n";
 			$message .= elgg_echo('elgg_update_services:download_url') . $result["download_url"] . "\r\n\r\n";
 		}
