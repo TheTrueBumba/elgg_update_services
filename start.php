@@ -24,7 +24,6 @@ function elgg_update_services_pagesetup() {
 	}
 }
 
-// The function elgg_update_services_page_handler is here only for testing purposes
 function elgg_update_services_page_handler($page) {
 	global $CONFIG;
 	
@@ -34,40 +33,20 @@ function elgg_update_services_page_handler($page) {
 		set_context('admin');
 		admin_gatekeeper();
 		
-		$installed_plugins = get_installed_plugins();
-		
-		foreach ($installed_plugins as $plugin => $data) {
-		
-			if (is_plugin_enabled($plugin)) {
-				$manifest = load_plugin_manifest($plugin);
-				
-				$plugin_hash_list[] = md5($plugin . $manifest['version'] . $manifest['author']);
-			}
-		}
-		
-		$url = "http://community.elgg.org/services/api/rest/json/?method=plugins.update.check&version=" . get_version(true);
-		
-		foreach ($plugin_hash_list as $plugin_hash) {
-			$url .= "&plugins[]=" . $plugin_hash;
-		}
-		
-		$execution_date = get_plugin_setting('execution_date', 'elgg_update_services');
-		
-		$title = date('Y-m-d H:i:s', $execution_date) . " - " . get_version(true);
-		
-		//Check updates against ELGG community
-		
-		$update_check = elgg_update_services_file_get_conditional_contents($url);
-		
-		$update_result = json_decode($update_check, true);
+		$update_result = elgg_update_services_get_updates();
 		
 		if (count($update_result["result"]) > 0) {
 			foreach($update_result["result"] as $result) {
-				//Compose the email				
-				$content .= "<br>" . $result["plugin_name"] . " - " . $result["plugin_version"] . " - " . $result["download_url"] . " - " . $result["plugin_url"] . "<br>";
+				$plugin_detail = elgg_view('elgg_update_services/update_detail', array('elgg_update_services_update_detail' => $result));
+				$content .= elgg_view("page_elements/contentwrapper", array('body' => $plugin_detail));
 			}
 		}
+		else {
+			$content = elgg_view("page_elements/contentwrapper", array('body' => 'No updates available'));
+		}
 
+		$title = 'ELGG Update Services';
+		
 		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
 		
 		page_draw($title, $body);
@@ -76,6 +55,29 @@ function elgg_update_services_page_handler($page) {
 	}
 
 	forward();
+}
+
+function elgg_update_services_get_updates() {
+	$installed_plugins = get_installed_plugins();
+		
+	foreach ($installed_plugins as $plugin => $data) {
+	
+		if (is_plugin_enabled($plugin)) {
+			$manifest = load_plugin_manifest($plugin);
+			
+			$plugin_hash_list[] = md5($plugin . $manifest['version'] . $manifest['author']);
+		}
+	}
+	
+	$url = "http://community.elgg.org/services/api/rest/json/?method=plugins.update.check&version=" . get_version(true);
+	
+	foreach ($plugin_hash_list as $plugin_hash) {
+		$url .= "&plugins[]=" . $plugin_hash;
+	}
+	
+	$update_check = elgg_update_services_file_get_conditional_contents($url);
+	
+	return json_decode($update_check, true);
 }
 
 function elgg_update_services_cron($hook, $entity_type, $returnvalue, $params){
@@ -103,28 +105,7 @@ function elgg_update_services_cron($hook, $entity_type, $returnvalue, $params){
 }
 
 function elgg_update_services_check_update() {
-	global $CONFIG;
-	
-	$installed_plugins = get_installed_plugins();
-		
-	foreach ($installed_plugins as $plugin => $data) {		
-		if (is_plugin_enabled($plugin)) {
-			$manifest = load_plugin_manifest($plugin);
-			
-			$plugin_hash_list[] = md5($plugin . $manifest['version'] . $manifest['author']);
-		}
-	}
-	
-	$url = "http://community.elgg.org/services/api/rest/json/?method=plugins.update.check&version=" . get_version(true);
-	
-	foreach ($plugin_hash_list as $plugin_hash) {
-		$url .= "&plugins[]=" . $plugin_hash;
-	}
-	
-	//Check updates against ELGG community		
-	$update_check = elgg_update_services_file_get_conditional_contents($url);
-	
-	$update_result = json_decode($update_check, true);
+	$update_result = elgg_update_services_get_updates();
 	
 	$message = sprintf(elgg_echo('elgg_update_services:message') . "\r\n\r\n");
 	
