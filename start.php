@@ -65,7 +65,9 @@ function elgg_update_services_get_updates() {
 		if (is_plugin_enabled($plugin)) {
 			$manifest = load_plugin_manifest($plugin);
 			
-			$plugin_hash_list[] = md5($plugin . $manifest['version'] . $manifest['author']);
+			if (strpos(strtolower($manifest['author']),'curverider') === false) {
+				$plugin_hash_list[] = md5($plugin . $manifest['version'] . $manifest['author']);
+			}
 		}
 	}
 	
