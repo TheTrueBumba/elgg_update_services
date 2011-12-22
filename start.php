@@ -87,18 +87,20 @@ function elgg_update_services_cron($hook, $entity_type, $returnvalue, $params){
 	
 	$execution_date = get_plugin_setting('execution_date', 'elgg_update_services');
 	
-	if ($execution_date && $execution_date <= time()) {
-		//Run the task
-		elgg_update_services_check_update();
-		
-		//Set the next execution date
-		$day = rand(1, 7);
-		$hour = rand(1, 24);
-		$minute = rand(1, 60);
-		
-		$execution_date = time() + 604800 + ($day * $hour * $minute * 60);  //One week plus random day, hour and minute.
-		
-		set_plugin_setting('execution_date', $execution_date, 'elgg_update_services');
+	if ($execution_date) {
+		if ($execution_date <= time()) {
+			//Run the task
+			elgg_update_services_check_update();
+			
+			//Set the next execution date
+			$day = rand(1, 7);
+			$hour = rand(1, 24);
+			$minute = rand(1, 60);
+			
+			$execution_date = time() + 604800 + ($day * $hour * $minute * 60);  //One week plus random day, hour and minute.
+			
+			set_plugin_setting('execution_date', $execution_date, 'elgg_update_services');
+		}
 	}
 	else {
 		set_plugin_setting('execution_date', time(), 'elgg_update_services');
