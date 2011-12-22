@@ -83,7 +83,7 @@ function elgg_update_services_get_updates() {
 
 function elgg_update_services_cron($hook, $entity_type, $returnvalue, $params){
 	//Retrieve the next execution date
-	set_plugin_setting('execution_date', time(), 'elgg_update_services'); // Uncomment this line to test the plugin
+	//set_plugin_setting('execution_date', time(), 'elgg_update_services'); // Uncomment this line to test the plugin
 	
 	$execution_date = get_plugin_setting('execution_date', 'elgg_update_services');
 	
