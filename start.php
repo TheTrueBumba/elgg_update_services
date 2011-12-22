@@ -47,8 +47,8 @@ function elgg_update_services_page_handler($page) {
 
 		$title = 'ELGG Update Services';
 		
-		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title . ' ' . date('M d Y H:i:s', get_plugin_setting('execution_date', 'elgg_update_services'))) . $content);
-		//$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
+		//$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title . ' ' . date('M d Y H:i:s', get_plugin_setting('execution_date', 'elgg_update_services'))) . $content);
+		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
 		
 		page_draw($title, $body);
 
