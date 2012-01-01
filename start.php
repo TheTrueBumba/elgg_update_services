@@ -8,9 +8,7 @@
 function elgg_update_services_init() {
 	global $CONFIG;
 	
-	register_plugin_hook('cron', 'daily', 'elgg_update_services_cron');
-	
-	register_page_handler('elgg_update_services', 'elgg_update_services_page_handler');
+	register_plugin_hook('cron', 'hourly', 'elgg_update_services_cron');
 	
 	register_elgg_event_handler('pagesetup', 'system', 'elgg_update_services_pagesetup');
 	
@@ -18,45 +16,9 @@ function elgg_update_services_init() {
 }
 
 function elgg_update_services_pagesetup() {
-	if (get_context() == 'admin' && isadminloggedin()) {
-		global $CONFIG;
-		add_submenu_item(elgg_echo('elgg_update_services:main_title'), $CONFIG->wwwroot . 'pg/elgg_update_services/admin/');
-	}
-}
-
-function elgg_update_services_page_handler($page) {
 	global $CONFIG;
-	
-	$page = (isset($page[0])) ? $page[0] : FALSE;
 
-	if ($page == 'admin') {
-		set_context('admin');
-		admin_gatekeeper();
-		
-		$update_result = elgg_update_services_get_updates();
-		
-		if (count($update_result["result"]) > 0) {
-			foreach($update_result["result"] as $result) {
-				$plugin_detail = elgg_view('elgg_update_services/update_detail', array('elgg_update_services_update_detail' => $result));
-				$content .= elgg_view("page_elements/contentwrapper", array('body' => $plugin_detail));
-			}
-		}
-		else {
-			$content = elgg_view("page_elements/contentwrapper", array('body' => elgg_echo('elgg_update_services:no_updates')));
-		}
-
-		$title = elgg_echo('elgg_update_services:main_title');
-		
-		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title . ' - ' . elgg_echo('elgg_update_services:next_check') . ' ' . date('Y/m/d', get_plugin_setting('execution_date', 'elgg_update_services'))) . $content);
-		
-		//$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
-		
-		page_draw($title, $body);
-
-		return TRUE;
-	}
-
-	forward();
+	elgg_register_admin_menu_item('administer', 'manageupdate', 'administer_utilities');
 }
 
 function elgg_update_services_get_updates() {
