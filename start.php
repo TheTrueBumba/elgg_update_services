@@ -20,7 +20,7 @@ function elgg_update_services_init() {
 function elgg_update_services_pagesetup() {
 	if (get_context() == 'admin' && isadminloggedin()) {
 		global $CONFIG;
-		add_submenu_item('ELGG Update Services', $CONFIG->wwwroot . 'pg/elgg_update_services/admin/');
+		add_submenu_item(elgg_echo('elgg_update_services:main_title'), $CONFIG->wwwroot . 'pg/elgg_update_services/admin/');
 	}
 }
 
@@ -42,12 +42,14 @@ function elgg_update_services_page_handler($page) {
 			}
 		}
 		else {
-			$content = elgg_view("page_elements/contentwrapper", array('body' => 'No updates available'));
+			$content = elgg_view("page_elements/contentwrapper", array('body' => elgg_echo('elgg_update_services:no_updates')));
 		}
 
-		$title = 'ELGG Update Services';
+		$title = elgg_echo('elgg_update_services:main_title');
 		
-		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
+		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title . ' - ' . elgg_echo('elgg_update_services:next_check') . ' ' . date('Y/m/d', get_plugin_setting('execution_date', 'elgg_update_services'))) . $content);
+		
+		//$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
 		
 		page_draw($title, $body);
 
@@ -115,10 +117,10 @@ function elgg_update_services_check_update() {
 	if (count($update_result["result"]) > 0) {
 		foreach($update_result["result"] as $result) {
 			//Compose the e-mail				
-			$message .= elgg_echo('elgg_update_services:plugin_name') . $result["plugin_name"] . "\r\n";
-			$message .= elgg_echo('elgg_update_services:plugin_version') . $result["plugin_version"] . "\r\n";
-			$message .= elgg_echo('elgg_update_services:plugin_url') . $result["plugin_url"] . "\r\n";
-			$message .= elgg_echo('elgg_update_services:download_url') . $result["download_url"] . "\r\n\r\n";
+			$message .= elgg_echo('elgg_update_services:mail_plugin_name') . $result["plugin_name"] . "\r\n";
+			$message .= elgg_echo('elgg_update_services:mail_plugin_version') . $result["plugin_version"] . "\r\n";
+			$message .= elgg_echo('elgg_update_services:mail_plugin_url') . $result["plugin_url"] . "\r\n";
+			$message .= elgg_echo('elgg_update_services:mail_download_url') . $result["download_url"] . "\r\n\r\n";
 		}
 		//Send the e-mail
 		elgg_update_services_notify_admin($message);
