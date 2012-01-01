@@ -8,7 +8,7 @@
 function elgg_update_services_init() {
 	global $CONFIG;
 	
-	register_plugin_hook('cron', 'daily', 'elgg_update_services_cron');
+	register_plugin_hook('cron', 'hourly', 'elgg_update_services_cron');
 	
 	register_page_handler('elgg_update_services', 'elgg_update_services_page_handler');
 	
@@ -47,7 +47,7 @@ function elgg_update_services_page_handler($page) {
 
 		$title = elgg_echo('elgg_update_services:main_title');
 		
-		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title . ' - ' . elgg_echo('elgg_update_services:next_check') . ' ' . date('Y/m/d', get_plugin_setting('execution_date', 'elgg_update_services'))) . $content);
+		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title . ' - ' . elgg_echo('elgg_update_services:next_check') . ' ' . date('Y/m/d H:i', get_plugin_setting('execution_date', 'elgg_update_services'))) . $content);
 		//$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
 		
 		page_draw($title, $body);
