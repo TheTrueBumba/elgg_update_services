@@ -1,6 +1,5 @@
 <?php
 $english = array(
-	//Configuration form
 	'admin:administer_utilities:manageupdate'			=> "Manage Updates",
 	'elgg_update_services:main_title'					=> "ELGG Update Services",
 	'elgg_update_services:no_updates'					=> "No updates available",
