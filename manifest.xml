@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
 	<field key="author" value="RayJ" />
-	<field key="version" value="1.7.0" />
+	<field key="version" value="1.7.1" />
 	<field key="description" value="Check for plugin´s updates in ELGG community" />
 	<field key="website" value="http://www.elgg.org/" />
 	<field key="copyright" value="(C) Ray J - 2011" />

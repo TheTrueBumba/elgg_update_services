@@ -1,16 +1,16 @@
 <?php
 $portugues_brasileiro = array (
 	'elgg_update_services:main_title'				=> "ELGG Update Services",
-	'elgg_update_services:no_updates'				=> "Nenhuma atualizaÁ„o disponÌvel",
+	'elgg_update_services:no_updates'				=> "Nenhuma atualiza√ß√£o dispon√≠vel",
 	'elgg_update_services:subject'					=> "ELGG Update Services",
-	'elgg_update_services:next_check'				=> "PrÛxima verificaÁ„o: ",
-	'elgg_update_services:message'					=> "Alguns plugins em seu site est„o desatualizados. Confira na lista abaixo:",
-	'elgg_update_services:version'					=> "Vers„o",
+	'elgg_update_services:next_check'				=> "Pr√≥xima verifica√ß√£o: ",
+	'elgg_update_services:message'					=> "Alguns plugins em seu site est√£o desatualizados. Confira na lista abaixo:",
+	'elgg_update_services:version'					=> "Vers√£o",
 	'elgg_update_services:direct_download'			=> "Download direto",
 	'elgg_update_services:mail_plugin_name'			=> "Nome: ",
-	'elgg_update_services:mail_plugin_version'		=> "Vers„o: ",
-	'elgg_update_services:mail_plugin_url'			=> "EndereÁo: ",
+	'elgg_update_services:mail_plugin_version'		=> "Vers√£o: ",
+	'elgg_update_services:mail_plugin_url'			=> "Endere√ßo: ",
 	'elgg_update_services:mail_download_url'		=> "Download direto: ",
-	'elgg_update_services:notify_mail_address'		=> "Enviar notificaÁıes sobre atualizaÁıes usando o e-mail abaixo"
+	'elgg_update_services:notify_mail_address'		=> "Enviar notifica√ß√µes sobre atualiza√ß√µes usando o e-mail abaixo"
 );
 add_translation("pt_br", $portugues_brasileiro);	
