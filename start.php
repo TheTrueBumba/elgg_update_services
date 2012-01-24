@@ -22,18 +22,14 @@ function elgg_update_services_pagesetup() {
 }
 
 function elgg_update_services_get_updates() {
-	$installed_plugins = get_installed_plugins();
-		
-	foreach ($installed_plugins as $plugin => $data) {
+	$installed_plugins = elgg_get_plugins('active');
 	
-		if (is_plugin_enabled($plugin)) {
-			$manifest = load_plugin_manifest($plugin);
-			if (strpos(strtolower($manifest['author']),'core developers') === false) {
-				$plugin_hash_list[] = md5($plugin . $manifest['version'] . $manifest['author']);
-			}
+	foreach ($installed_plugins as $id => $plugin) {
+		if (strpos(strtolower($plugin->getManifest()->getAuthor()),'core developers') === false) {
+			$plugin_hash_list[] = md5($plugin->getID() . $plugin->getManifest()->getVersion() . $plugin->getManifest()->getAuthor());
 		}
 	}
-	
+
 	$url = "http://community.elgg.org/services/api/rest/json/?method=plugins.update.check&version=" . get_version(true);
 	
 	foreach ($plugin_hash_list as $plugin_hash) {
@@ -49,7 +45,7 @@ function elgg_update_services_cron($hook, $entity_type, $returnvalue, $params){
 	//Retrieve the next execution date
 	//set_plugin_setting('execution_date', time(), 'elgg_update_services'); // Uncomment this line to test the plugin
 	
-	$execution_date = get_plugin_setting('execution_date', 'elgg_update_services');
+	$execution_date = elgg_get_plugin_setting('execution_date', 'elgg_update_services');
 	
 	if ($execution_date) {
 		if ($execution_date <= time()) {
@@ -100,7 +96,7 @@ function elgg_update_services_notify_admin($message){
 		$mailfrom = 'noreply@' . get_site_domain($CONFIG->site_guid);
 	}
 	
-	$mailto = get_plugin_setting("notify_mail_address");
+	$mailto = elgg_get_plugin_setting("notify_mail_address");
 	
 	if($mailto){
 		elgg_send_email($mailfrom, $mailto, elgg_echo('elgg_update_services:subject'), $message);
