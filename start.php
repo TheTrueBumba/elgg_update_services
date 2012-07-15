@@ -8,9 +8,9 @@
 function elgg_update_services_init() {
 	global $CONFIG;
 
-	register_plugin_hook('cron', 'hourly', 'elgg_update_services_cron');
+	elgg_register_plugin_hook_handler('cron', 'hourly', 'elgg_update_services_cron');
 
-	register_elgg_event_handler('pagesetup', 'system', 'elgg_update_services_pagesetup');
+	elgg_register_event_handler('pagesetup', 'system', 'elgg_update_services_pagesetup');
 
 	return true;
 }
@@ -120,4 +120,4 @@ function elgg_update_services_file_get_conditional_contents($szURL){
 	return false;
 }
 
-register_elgg_event_handler('init', 'system', 'elgg_update_services_init');
+elgg_register_event_handler('init', 'system', 'elgg_update_services_init');
