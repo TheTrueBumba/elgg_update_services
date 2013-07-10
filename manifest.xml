@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>ELGG Update Services</name>
 	<author>Ray J</author>
@@ -12,14 +11,4 @@
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
-=======
-<plugin_manifest>
-	<field key="author" value="RayJ" />
-	<field key="version" value="1.7.1" />
-	<field key="description" value="Check for plugin´s updates in ELGG community" />
-	<field key="website" value="http://www.elgg.org/" />
-	<field key="copyright" value="(C) Ray J - 2011" />
-	<field key="licence" value="GNU Public License version 2" />
-	<field key="elgg_version" value="2010030101" />
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 </plugin_manifest>

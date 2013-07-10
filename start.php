@@ -7,88 +7,26 @@
 
 function elgg_update_services_init() {
 	global $CONFIG;
-<<<<<<< HEAD
 
 	elgg_register_plugin_hook_handler('cron', 'hourly', 'elgg_update_services_cron');
 
 	elgg_register_event_handler('pagesetup', 'system', 'elgg_update_services_pagesetup');
 
-=======
-	
-	register_plugin_hook('cron', 'hourly', 'elgg_update_services_cron');
-	
-	register_page_handler('elgg_update_services', 'elgg_update_services_page_handler');
-	
-	register_elgg_event_handler('pagesetup', 'system', 'elgg_update_services_pagesetup');
-	
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 	return true;
 }
 
 function elgg_update_services_pagesetup() {
-<<<<<<< HEAD
 	global $CONFIG;
-=======
-	if (get_context() == 'admin' && isadminloggedin()) {
-		global $CONFIG;
-		add_submenu_item(elgg_echo('elgg_update_services:main_title'), $CONFIG->wwwroot . 'pg/elgg_update_services/admin/');
-	}
-}
-
-function elgg_update_services_page_handler($page) {
-	global $CONFIG;
-	
-	$page = (isset($page[0])) ? $page[0] : FALSE;
-
-	if ($page == 'admin') {
-		set_context('admin');
-		admin_gatekeeper();
-		
-		$update_result = elgg_update_services_get_updates();
-		
-		if (count($update_result["result"]) > 0) {
-			foreach($update_result["result"] as $result) {
-				$plugin_detail = elgg_view('elgg_update_services/update_detail', array('elgg_update_services_update_detail' => $result));
-				$content .= elgg_view("page_elements/contentwrapper", array('body' => $plugin_detail));
-			}
-		}
-		else {
-			$content = elgg_view("page_elements/contentwrapper", array('body' => elgg_echo('elgg_update_services:no_updates')));
-		}
-
-		$title = elgg_echo('elgg_update_services:main_title');
-		
-		$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title . ' - ' . elgg_echo('elgg_update_services:next_check') . ' ' . date('Y/m/d H:i', get_plugin_setting('execution_date', 'elgg_update_services'))) . $content);
-		//$body = elgg_view_layout('two_column_left_sidebar', '', elgg_view_title($title) . $content);
-		
-		page_draw($title, $body);
-
-		return TRUE;
-	}
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 
 	elgg_register_admin_menu_item('administer', 'manageupdate', 'administer_utilities');
 }
 
 function elgg_update_services_get_updates() {
-<<<<<<< HEAD
 	$installed_plugins = elgg_get_plugins('active');
 
 	foreach ($installed_plugins as $id => $plugin) {
 		if (strpos(strtolower($plugin->getManifest()->getAuthor()),'core developers') === false) {
 			$plugin_hash_list[] = md5($plugin->getID() . $plugin->getManifest()->getVersion() . $plugin->getManifest()->getAuthor());
-=======
-	$installed_plugins = get_installed_plugins();
-		
-	foreach ($installed_plugins as $plugin => $data) {
-	
-		if (is_plugin_enabled($plugin)) {
-			$manifest = load_plugin_manifest($plugin);
-			
-			if (strpos(strtolower($manifest['author']),'curverider') === false) {
-				$plugin_hash_list[] = md5($plugin . $manifest['version'] . $manifest['author']);
-			}
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 		}
 	}
 
@@ -106,37 +44,21 @@ function elgg_update_services_get_updates() {
 function elgg_update_services_cron($hook, $entity_type, $returnvalue, $params){
 	//Retrieve the next execution date
 	//set_plugin_setting('execution_date', time(), 'elgg_update_services'); // Uncomment this line to test the plugin
-<<<<<<< HEAD
 
 	$execution_date = elgg_get_plugin_setting('execution_date', 'elgg_update_services');
 
-=======
-	
-	$execution_date = get_plugin_setting('execution_date', 'elgg_update_services');
-	
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 	if ($execution_date) {
 		if ($execution_date <= time()) {
 			//Run the task
 			elgg_update_services_check_update();
-<<<<<<< HEAD
 
-=======
-			
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 			//Set the next execution date
 			$day = rand(1, 7);
 			$hour = rand(1, 24);
 			$minute = rand(1, 60);
-<<<<<<< HEAD
 
 			$execution_date = time() + 604800 + ($day * $hour * $minute * 60);  //One week plus random day, hour and minute.
 
-=======
-			
-			$execution_date = time() + 604800 + ($day * $hour * $minute * 60);  //One week plus random day, hour and minute.
-			
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 			set_plugin_setting('execution_date', $execution_date, 'elgg_update_services');
 		}
 	}
@@ -152,11 +74,7 @@ function elgg_update_services_check_update() {
 
 	if (count($update_result["result"]) > 0) {
 		foreach($update_result["result"] as $result) {
-<<<<<<< HEAD
 			//Compose the e-mail
-=======
-			//Compose the e-mail				
->>>>>>> eb1fec2885cb2e561e44e2ad8adb32dd2a9e7973
 			$message .= elgg_echo('elgg_update_services:mail_plugin_name') . $result["plugin_name"] . "\r\n";
 			$message .= elgg_echo('elgg_update_services:mail_plugin_version') . $result["plugin_version"] . "\r\n";
 			$message .= elgg_echo('elgg_update_services:mail_plugin_url') . $result["plugin_url"] . "\r\n";
