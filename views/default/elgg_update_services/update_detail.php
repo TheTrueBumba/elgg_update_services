@@ -1,5 +1,5 @@
 <?php
-$elgg_update_services_update_detail = (isset($vars['elgg_update_services_update_detail'])) ? $vars['elgg_update_services_update_detail'] : NULL;
+$elgg_update_services_update_detail = (isset($vars['elgg_update_services_update_detail'])) ? $vars['elgg_update_services_update_detail'] : null;
 
 if (!$elgg_update_services_update_detail) {
 	return;

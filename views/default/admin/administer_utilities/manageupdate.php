@@ -1,5 +1,13 @@
 <?php
+
+// Check for available updates now
 $update_result = elgg_update_services_get_updates();
+
+// Set the next execution date for automatic update checking via cron after just having checked for updates
+$hour = rand(1, 24);
+$minute = rand(1, 60);
+$execution_date = time() + 604800 + ($hour * $minute * 60); // One week plus random hour and minute (= maximum of 8 days between automatic checks)
+elgg_set_plugin_setting('execution_date', $execution_date, 'elgg_update_services');
 
 if (count($update_result["result"]) > 0) {
 	foreach($update_result["result"] as $result) {
