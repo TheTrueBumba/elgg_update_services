@@ -1,9 +1,9 @@
 <?php
 return array(
 	'admin:administer_utilities:manageupdate' => "Manage Updates",
-	'elgg_update_services:main_title' => "ELGG Update Services",
+	'elgg_update_services:main_title' => "Elgg Update Services",
 	'elgg_update_services:no_updates' => "No updates available.",
-	'elgg_update_services:subject' => "ELGG Update Services",
+	'elgg_update_services:subject' => "Elgg Update Services",
 	'elgg_update_services:next_check' => "Next check: ",
 	'elgg_update_services:message' => "Some plugins in your site are out of date. See the list below:",
 	'elgg_update_services:version' => "Version",
